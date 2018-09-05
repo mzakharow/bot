@@ -1,9 +1,10 @@
 import random
 
 import telebot
+from telebot import types
 from telebot.types import Message
 
-TOKEN = ''
+TOKEN = '687525307:AAETuwa-twszYp_HUw9hrySbUIMoKBRkiI0'
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -30,5 +31,14 @@ def sticker_handler(message: Message):
     print(message)
     # print(message.text)
 
+
+@bot.inline_handler(lambda query: query.query)
+def query_text(inline_query):
+    try:
+        r = types.InLineQueryResultArticle('1', 'Result', types.InputTextMessageContent('Result message.'))
+        r2 = types.InlineQueryResultArticle('2', 'Result2', types.InputTextMessageContent('Result message 2.'))
+        bot.answer_inline_query(inline_query.id, [r, r2])
+    except Exception as e:
+        print(e)
 
 bot.polling(timeout=60)
